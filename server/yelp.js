@@ -15,6 +15,17 @@ class Yelp {
               });
           })
         }
+
+    getBizReviews(biz) {
+        return new Promise((resolve, reject) => {
+            client.reviews(biz).then(response => {
+              const review = response.jsonBody.reviews[0].text;
+                resolve(review);
+              }).catch(err => {
+                reject(err)
+              });
+          })
+        }
 }
 
 
