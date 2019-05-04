@@ -1,0 +1,28 @@
+{
+  "name": "theo",
+  "version": "1.0.0",
+  "description": "Assistant for mabel and I",
+  "main": "app.js",
+  "dependencies": {
+    "@slack/events-api": "^2.2.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "request": "^2.88.0",
+    "yelp-fusion": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test",
+    "theo": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpcruz/theo.git"
+  },
+  "author": "Laurence Cruz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lpcruz/theo/issues"
+  },
+  "homepage": "https://github.com/lpcruz/theo#readme"
+}
