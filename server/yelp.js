@@ -10,8 +10,8 @@ class Yelp {
               }).then(response => {
                 const biz = (response.jsonBody.businesses[0]);
                 resolve(biz);
-              }).catch(e => {
-                reject()
+              }).catch(err => {
+                reject(err)
               });
           })
         }
