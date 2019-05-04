@@ -1,7 +1,7 @@
 const request = require('request');
 
 class Slack { 
-    notify(message, title, value) {
+    notify(message) {
         request({
             uri: process.env.SLACK_URI,
             method: 'POST',
@@ -12,13 +12,6 @@ class Slack {
               attachments: [{
                   pretext: message,
                   fallback: message,
-                  fields: [
-                    {
-                        title: title,
-                        value: value,
-                        short: true
-                    }
-                ],
               }]
             }
           });

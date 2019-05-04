@@ -40,7 +40,7 @@ const Yelp = require('./yelp');
               const location = message.text.split('in').pop();
 
               this.yelp.getBiz(search, location).then(biz => {
-                this.slack.notify(`I know a great place to get some${search} called *${biz.name}*. It has a ${biz.rating}/5 rating.`, `${biz.name}`, `${biz.location.display_address}`); 
+                this.slack.notify(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}`); 
             })
           }
         });
