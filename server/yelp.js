@@ -1,5 +1,7 @@
 const yelp = require('yelp-fusion');
-const client = yelp.client(process.env.YELP_API_KEY);
+const client = yelp.client(process.env.YELP_API_KEY, {
+  socketTimeout: 5000
+});
 
 class Yelp { 
     getBiz(searchTerm, location) {
