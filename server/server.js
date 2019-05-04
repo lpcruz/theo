@@ -38,7 +38,7 @@ const Yelp = require('./yelp');
           if (!message.subtype && message.text.indexOf('food') >= 0) {
               let search = message.text.split('search').pop();
               this.yelp.getBiz(`${search}`, 'new york, ny').then(biz => {
-                this.slack.notify(`I know a great place to get some${search} called *${biz.name}* located at ${biz.location.display_address}. It has a ${biz.rating} / 5 rating`); 
+                this.slack.notify(`I know a great place to get some${search} called *${biz.name}* located at ${biz.location.display_address}. It has a ${biz.rating}/5 rating`); 
             })
           }
         });
