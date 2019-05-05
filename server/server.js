@@ -57,7 +57,11 @@ const Weather = require('./weather');
               const location = message.text.split('weather').pop();
 
               this.weather.getTemp(location).then(weather => {
-                  this.slack.notify(`It is currently ${Math.floor(weather.main.temp)}°F in${location} with ${weather.weather[0].description}`);
+                  if (weather.main === undefined) {
+                    this.slack.notify(`Sorry about that! I can't seem to get the any weather information in${location} at this time.`);
+                  } else {
+                    this.slack.notify(`It is currently ${Math.floor(weather.main.temp)}°F in${location} with ${weather.weather[0].description}`);
+                  }
               })
           }
           
