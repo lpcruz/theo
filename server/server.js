@@ -8,6 +8,7 @@ const slackEvents = slackEventsApi.createEventAdapter(process.env.SLACK_SIGNING_
 });
 const Slack = require('./slack');
 const Yelp = require('./yelp');
+const Weather = require('./weather');
 
   class Server {
     constructor() {
@@ -16,6 +17,7 @@ const Yelp = require('./yelp');
         this.PORT = 4390;
         this.slack = new Slack();
         this.yelp = new Yelp();
+        this.weather = new Weather();
     }
 
     setUp() {
@@ -32,10 +34,13 @@ const Yelp = require('./yelp');
       app.use('/slack/events', slackEvents.expressMiddleware());
       slackEvents.on('app_mention', (message, body) => {
           console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
+          
+          // greetings
           if (!message.subtype && message.text.indexOf('hi') >= 0) {  
               this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
             };
           
+          // food & drink
           if (!message.subtype && message.text.indexOf('search') >= 0) {
               const search = message.text.split('search').pop();
               const location = message.text.split('in').pop();
@@ -45,7 +50,18 @@ const Yelp = require('./yelp');
                     this.slack.notify(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}\n\nHere's what someone had to say about it:\n\n"${review}"`); 
                 })
             })
-          } else {
+          } 
+          
+          // weather
+          if (!message.subtype && message.text.indexOf('weather') >= 0) {
+              const location = message.text.split('weather').pop();
+
+              this.weather.getTemp(location).then(weather => {
+                  this.slack.notify(`It is currently ${Math.floor(weather.main.temp)}°F in${location} with ${weather.weather[0].description}`);
+              })
+          }
+          
+          else {
               this.slack.notify(`Hey <@${body.event.user}>, I am dead inside.`)
           }
         });
