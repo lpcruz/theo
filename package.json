@@ -14,7 +14,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "test",
+    "test": "mocha ./test/travis.spec.js",
     "theo": "node app.js"
   },
   "repository": {
