@@ -5,7 +5,7 @@ node_js:
 install:
   - npm install
 before_script:
-  - npm run bot
+  - npm run theo
 cache:
   directories:
     - "node_modules"
