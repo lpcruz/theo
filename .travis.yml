@@ -7,7 +7,7 @@ env:
 install:
   - npm install
 before_script:
-  - node app.js > /dev/null &
+  - npm run theo > /dev/null &
 cache:
   directories:
     - "node_modules"
