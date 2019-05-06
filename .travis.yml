@@ -4,6 +4,10 @@ node_js:
   - "stable"
 install:
   - npm install
+before_script:
+  - npm run bot
 cache:
   directories:
     - "node_modules"
+after_script:
+  - killall node
