@@ -7,9 +7,9 @@ env:
 install:
   - npm install
 before_script:
-  - npm run theo
+  - node app.js > /dev/null &
 cache:
   directories:
     - "node_modules"
 after_script:
-  - killall node
+  - pkill -f app.js
