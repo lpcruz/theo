@@ -14,7 +14,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "test",
+    "test": "mocha",
     "theo": "node app.js"
   },
   "repository": {
