@@ -36,12 +36,12 @@ const Weather = require('./weather');
           console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
           
           // greetings
-          if (!message.subtype && message.text.indexOf('hi') >= 0) {  
+          if (!message.subtype && message.text.match(/(^hi)|(hello)|(^hey)(^yo)/g)) {  
               this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
             };
           
           // food & drink
-          if (!message.subtype && message.text.indexOf('search') >= 0) {
+          if (!message.subtype && message.text.match(/(search)/g)) {
               const search = message.text.split('search').pop();
               const location = message.text.split('in').pop();
 
@@ -53,8 +53,8 @@ const Weather = require('./weather');
           } 
           
           // weather
-          if (!message.subtype && message.text.indexOf('weather') >= 0) {
-              const location = message.text.split('weather').pop();
+          if (!message.subtype && message.text.match(/(weather in)|(temperature in)|(forecast in)/)) {
+              const location = message.text.split('in').pop();
 
               this.weather.getTemp(location).then(weather => {
                   if (weather.main === undefined) {
@@ -63,10 +63,6 @@ const Weather = require('./weather');
                     this.slack.notify(`It is currently ${Math.floor(weather.main.temp)}°F in${location} with ${weather.weather[0].description}`);
                   }
               })
-          }
-          
-          else {
-              this.slack.notify(`Hey <@${body.event.user}>, I am dead inside.`)
           }
         });
         
