@@ -36,7 +36,7 @@ const Weather = require('./weather');
           console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
           
           // greetings
-          if (!message.subtype && message.text.match(/(?:^|\W)hi(?:$|\W)|(?:^|\W)yo(?:$|\W)|(?:^|\W)hello(?:$|\W)|\W|(?:^|\W)hey(?:$|\W)/g)) {  
+          if (!message.subtype && message.text.match(/\bhi|hey|yo|hello\b/gi)) {  
               this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
             };
           
