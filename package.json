@@ -13,9 +13,12 @@
     "request": "^2.88.0",
     "yelp-fusion": "^3.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  },
   "scripts": {
     "test": "mocha ./test/travis.spec.js",
+    "lint:server": "eslint ./server",
     "theo": "node app.js"
   },
   "repository": {
