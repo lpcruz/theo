@@ -6,7 +6,7 @@ const app = express();
 
 const env = require('../config/env');
 const slackEvents = slackEventsApi.createEventAdapter(
-  env.SLACK.SLACK_SIGNING_SECRENT, {
+  env.SLACK.SLACK_SIGNING_SECRET, {
     includeBody: true
   });
 const Slack = require('./slack');
