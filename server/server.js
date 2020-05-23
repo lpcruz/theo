@@ -18,9 +18,6 @@ const SpotifyAPI = require('./spotify');
 
 class Server {
   constructor() {
-    this.clientId = env.SLACK.SLACK_CLIENT_ID;
-    this.clientSecret = env.SLACK.SLACK_CLIENT_SECRET;
-    this.PORT = 4390;
     this.slack = new Slack();
     this.yelp = new Yelp();
     this.weather = new Weather();
@@ -29,7 +26,7 @@ class Server {
 
   setUp() {
     return this
-      .init(this.PORT)
+      .init(4390)
       .auth()
       .get('/')
       .get('/oauth')
@@ -94,27 +91,30 @@ class Server {
   }
 
   auth() {
-    app.get('/oauth', function(req, res) {
+    app.get('/oauth', (req, res) => {
       if (!req.query.code) {
         res.status(500);
-        res.send({"Error": "Looks like we're not getting code."});
-        console.log("Looks like we're not getting code.");
+        res.send({ 'Error': 'Something went wrong with authenticating Slack!' });
+        console.log('Something went wrong with authenticating Slack!');
       } else {
         request({
           url: 'https://slack.com/api/oauth.access',
-          qs: {code: req.query.code, client_id: this.clientId, client_secret: this.clientSecret},
-          method: 'GET', 
+          qs: {
+            code: req.query.code,
+            client_id: env.SLACK.SLACK_CLIENT_ID,
+            client_secret: env.SLACK.SLACK_CLIENT_SECRET
+          },
+          method: 'GET',
         
-        }, function (error, res, body) {
+        }, (error, res, body) => {
           if (error) {
             console.log(error);
           } else {
             res.json(body);
-        
           }
         })
       }
-    })
+    });
     return this;
   }
 }
