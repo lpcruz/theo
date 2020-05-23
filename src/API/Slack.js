@@ -18,13 +18,14 @@ const foodReactions = [
 const drinkReactions = [
   'beers',
   'cocktail',
-  'wine_glass'
+  'wine_glass',
+  'beer'
 ]
 
 class Slack {
-  notify(message, opts) {
+  notify(message, opts, channel) {
     request({
-      uri: env.SLACK.SLACK_URI,
+      uri: channel,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -43,7 +44,7 @@ class Slack {
 
   sharePlaylist(opts, playlist) {
     let message;
-    message = `<@${opts.user}> reacted with :${opts.reaction}: Here are a playlist that reminds me that!`
+    message = `<@${opts.user}> reacted with :${opts.reaction}: Here is a playlist that reminds me that!`
     
     if (foodReactions.includes(opts.reaction)) {
       message = `<@${opts.user}> did you say ${opts.reaction}? I'm hungry now! Give me :${opts.reaction}: and I give you playlist about :${opts.reaction}:`;
@@ -66,8 +67,21 @@ class Slack {
           image_url: playlist.images[0].url,
           alt_text: `A playlist image triggered by ${opts.reaction}`
         }
-      }
+      }, env.SLACK.MUSIC_URI
     )
+  }
+
+  shareYelpBusiness(message, review) {
+    this.notify(message,
+      {
+        type: 'section',
+        block_id: 'section567',
+        text: {
+          type: 'mrkdwn',
+          text: `Here's what someone had to say about it:\n\n"${review}"`
+        }
+      }
+    , env.SLACK.NOM_NOM_URI);
   }
 }
 

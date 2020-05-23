@@ -4,7 +4,8 @@ module.exports = {
     SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
     SLACK_CLIENT_SECRET: process.env.SLACK_CLIENT_SECRET,
     SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
-    SLACK_URI: process.env.SLACK_URI,
+    NOM_NOM_URI: process.env.NOM_NOM_URI,
+    MUSIC_URI: process.env.MUSIC_URI
   },
   
   YELP: {

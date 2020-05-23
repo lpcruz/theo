@@ -55,7 +55,7 @@ class Server {
         const location = message.text.split('in').pop();
         this.yelp.getBiz(search, location).then(biz => {
           this.yelp.getBizReviews(biz.alias).then(review => {
-            this.slack.notify(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}\n\nHere's what someone had to say about it:\n\n"${review}"`); 
+            this.slack.shareYelpBusiness(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}`, review); 
           })
         })
       }
