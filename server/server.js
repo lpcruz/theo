@@ -36,10 +36,10 @@ class Server {
     
   async initSlackListener() {
     await app.use('/slack/events', slackEvents.expressMiddleware());
-    slackEvents.on('reaction_added', async (message, body) => {
+    slackEvents.on('reaction_added', async message => {
       const playlistSearch = await this.spotify.searchPlaylists(message.reaction);
-      const topPlaylist = playlistSearch.body.playlists.items[0];
-      this.slack.notify(`I'm feeling like ${message.reaction} too <@${body.event.user}>\nHere's a playlist that has to do with ${message.reaction}:\nPlaylist: ${topPlaylist.name}\nLink: ${topPlaylist.external_urls.spotify}\nEnjoy!\n`)
+      const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
+      this.slack.sharePlaylist(message, randomPlaylist);
     });
 
     await slackEvents.on('app_mention', (message, body) => {
