@@ -83,6 +83,19 @@ class Slack {
       }
     , env.SLACK.NOM_NOM_URI);
   }
+
+  giveTheWeather(message, weather) {
+    this.notify(message,
+      {
+        type: 'section',
+        block_id: 'section567',
+        text: {
+          type: 'mrkdwn',
+          text: `It is currently ${Math.floor(weather.main.temp)}°F with ${weather.weather[0].description}`
+        }
+      }
+    , env.SLACK.ANNOUNCEMENTS_URI);
+  }
 }
 
 module.exports = Slack;
