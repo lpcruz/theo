@@ -42,10 +42,10 @@ class Server {
       this.slack.sharePlaylist(message, randomPlaylist);
     });
 
-    await slackEvents.on('app_mention', (message, body) => {
+    await slackEvents.on('app_mention', async (message, body) => {
       console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
       // greetings
-      if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {  
+      if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {
         this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
       }
 
@@ -55,7 +55,7 @@ class Server {
         const location = message.text.split('in').pop();
         this.yelp.getBiz(search, location).then(biz => {
           this.yelp.getBizReviews(biz.alias).then(review => {
-            this.slack.shareYelpBusiness(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}`, review); 
+            this.slack.shareYelpBusiness(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}`, review);
           })
         })
       }
@@ -70,6 +70,14 @@ class Server {
             this.slack.giveTheWeather(`Here's the weather in${location}`, weather);
           }
         })
+      }
+
+      //spotify
+      if (!message.subtype && message.text.match(PATTERNS.SPOTIFY_PLAYLIST)) {
+        const query = message.text.split('feeling').pop()
+        const playlistSearch = await this.spotify.searchPlaylists(query);
+        const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
+        this.slack.sharePlaylist(message, randomPlaylist);
       }
 
     });

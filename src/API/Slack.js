@@ -44,7 +44,13 @@ class Slack {
 
   sharePlaylist(opts, playlist) {
     let message;
-    message = `<@${opts.user}> reacted with :${opts.reaction}: Here is a playlist that reminds me that!`
+    if (opts.text) {
+      message = `<@${opts.user}> ${opts.text.split('feeling').pop()}? I got a playlist for you!`;
+    }
+
+    if (opts.reaction) {
+      message = `<@${opts.user}> reacted with :${opts.reaction}: Here is a playlist that reminds me that!`; 
+    }
     
     if (foodReactions.includes(opts.reaction)) {
       message = `<@${opts.user}> did you say ${opts.reaction}? I'm hungry now! Give me :${opts.reaction}: and I give you playlist about :${opts.reaction}:`;
