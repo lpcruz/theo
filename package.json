@@ -7,10 +7,13 @@
     "@slack/events-api": "^2.2.0",
     "chai": "^4.2.0",
     "dotenv": "^8.0.0",
+    "emoji-name-map": "^1.2.8",
     "express": "^4.16.4",
     "lodash": "^4.17.15",
     "mocha": "^6.1.4",
     "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "spotify-web-api-node": "^4.0.0",
     "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {

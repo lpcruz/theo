@@ -12,6 +12,8 @@ const slackEvents = slackEventsApi.createEventAdapter(
 const Slack = require('./slack');
 const Yelp = require('./yelp');
 const Weather = require('./weather');
+const SpotifyClient = require('./spotify-client');
+const SpotifyAPI = require('./spotify');
 
 class Server {
   constructor() {
@@ -21,6 +23,7 @@ class Server {
     this.slack = new Slack();
     this.yelp = new Yelp();
     this.weather = new Weather();
+    this.spotify = new SpotifyAPI(SpotifyClient);
   }
 
   setUp() {
@@ -33,32 +36,33 @@ class Server {
       .initSlackListener();
   }
     
-  initSlackListener() {
-    app.use('/slack/events', slackEvents.expressMiddleware());
+  async initSlackListener() {
+    await app.use('/slack/events', slackEvents.expressMiddleware());
+     slackEvents.on('reaction_added', async (message, body) => {
+      const playlistSearch = await this.spotify.searchPlaylists(message.reaction);
+      const topPlaylist = playlistSearch.body.playlists.items[0];
+      this.slack.notify(`I'm feeling like ${message.reaction} too <@${body.event.user}>\nHere's a playlist that has to do with ${message.reaction}:\nPlaylist: ${topPlaylist.name}\nLink: ${topPlaylist.external_urls.spotify}\nEnjoy!\n`)
+    });
+
     slackEvents.on('app_mention', (message, body) => {
       console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
-          
       // greetings
       if (!message.subtype && message.text.match(/\bhi|\bhey\b|\byo\b|hello\b/gi)) {  
         this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
       }
-          
       // food & drink
       if (!message.subtype && message.text.match(/(search)/g)) {
         const search = message.text.split('search').pop();
         const location = message.text.split('in').pop();
-
         this.yelp.getBiz(search, location).then(biz => {
           this.yelp.getBizReviews(biz.alias).then(review => {
             this.slack.notify(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}\n\nHere's what someone had to say about it:\n\n"${review}"`); 
           })
         })
       } 
-
       // weather
       if (!message.subtype && message.text.match(/(weather in)|(temperature in)|(forecast in)/)) {
         const location = message.text.split('in').pop();
-
         this.weather.getTemp(location).then(weather => {
           if (weather.main === undefined) {
             this.slack.notify(`Sorry about that! I can't seem to get the any weather information in${location} at this time.`);
