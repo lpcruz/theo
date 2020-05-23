@@ -1,6 +1,6 @@
 const yelp = require('yelp-fusion');
 
-const env = require('../config/env');
+const env = require('../../config/env');
 const client = yelp.client(
   env.YELP.YELP_API_KEY, {
     socketTimeout: 5000

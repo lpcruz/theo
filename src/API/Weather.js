@@ -1,5 +1,5 @@
 const request = require('request');
-const env = require('../config/env');
+const env = require('../../config/env');
 
 class Weather { 
   getTemp(city) {

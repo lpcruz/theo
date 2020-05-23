@@ -10,11 +10,11 @@ const slackEvents = slackEventsApi.createEventAdapter(
   env.SLACK.SLACK_SIGNING_SECRET, {
     includeBody: true
   });
-const Slack = require('./slack');
-const Yelp = require('./yelp');
-const Weather = require('./weather');
-const SpotifyClient = require('./spotify-client');
-const SpotifyAPI = require('./spotify');
+const Slack = require('../src/API/Slack');
+const Yelp = require('../src/API/Yelp');
+const Weather = require('../src/API/Weather');
+const SpotifyClient = require('../src/API/SpotifyClient');
+const SpotifyAPI = require('../src/API/Spotify');
 
 class Server {
   constructor() {
