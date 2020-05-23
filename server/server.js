@@ -5,6 +5,7 @@ const slackEventsApi = require('@slack/events-api');
 const app = express();
 
 const env = require('../config/env');
+const PATTERNS = require('../shared/patterns');
 const slackEvents = slackEventsApi.createEventAdapter(
   env.SLACK.SLACK_SIGNING_SECRET, {
     includeBody: true
@@ -47,12 +48,12 @@ class Server {
     await slackEvents.on('app_mention', (message, body) => {
       console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
       // greetings
-      if (!message.subtype && message.text.match(/\bhi|\bhey\b|\byo\b|hello\b/gi)) {  
+      if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {  
         this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
       }
 
       // food & drink
-      if (!message.subtype && message.text.match(/(search)/g)) {
+      if (!message.subtype && message.text.match(PATTERNS.SEARCH)) {
         const search = message.text.split('search').pop();
         const location = message.text.split('in').pop();
         this.yelp.getBiz(search, location).then(biz => {
@@ -63,7 +64,7 @@ class Server {
       }
 
       // weather
-      if (!message.subtype && message.text.match(/(weather in)|(temperature in)|(forecast in)/)) {
+      if (!message.subtype && message.text.match(PATTERNS.WEATHER)) {
         const location = message.text.split('in').pop();
         this.weather.getTemp(location).then(weather => {
           if (weather.main === undefined) {
@@ -73,7 +74,7 @@ class Server {
           }
         })
       }
-      
+
     });
     return this;
   }  
