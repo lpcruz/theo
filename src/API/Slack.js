@@ -62,6 +62,7 @@ class Slack {
   }
 
   sharePlaylist(opts) {
+    console.log(opts)
     let greeting;
     if (opts.message.text) {
       greeting = `<@${opts.message.user}> feeling${opts.message.text.split('feeling').pop()}? I got a playlist for you!`;
@@ -99,7 +100,7 @@ class Slack {
         }
       }
     ];
-    if (opts.message.item.channel === CHANNELS.MUSIC) {
+    if (opts.message.channel === CHANNELS.MUSIC) {
       this.notify(message, env.SLACK.MUSIC_URI);
     }
   }
