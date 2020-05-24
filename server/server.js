@@ -37,17 +37,17 @@ class Server {
   async initSlackListener() {
     await app.use('/slack/events', slackEvents.expressMiddleware());
     // reaction trigger
-    slackEvents.on('reaction_added', async message => {
+    await slackEvents.on('reaction_added', async message => {
       const playlistSearch = await this.spotify.searchPlaylists(message.reaction);
       const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
       this.slack.sharePlaylist({ message, randomPlaylist });
     });
 
-    await slackEvents.on('app_mention', async (message, body) => {
-      console.log(`Received a message event: user ${body.event.user} in channel ${body.event.channel} says ${body.event.text}`);
+    await slackEvents.on('app_mention', async message => {
+      console.log(`Received a message event: user ${message.user} in channel ${message.channel} says ${message.text}`);
       // greetings
       if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {
-        this.slack.notify(`Hey <@${body.event.user}>!, how are you?`);
+        this.slack.greet({ message });
       }
 
       // food & drink

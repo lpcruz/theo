@@ -22,7 +22,16 @@ const drinkReactions = [
   'cocktail',
   'wine_glass',
   'beer'
-]
+];
+
+const greetings = [
+  ':wave: ¡?QUE LO QUE?!',
+  ':wave: ¡Di me lo!',
+  ':wave: Hi, how are you?',
+  ':wave: kumusta ka?',
+  ':wave: Hope you are having a good day!',
+  `:face_with_rolling_eyes: ...oh it's you...`
+];
 
 class Slack {
   notify(message, channel) {
@@ -36,6 +45,20 @@ class Slack {
         blocks: message,
       }
     });
+  }
+
+  greet(opts) {
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    const message = [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `${randomGreeting} <@${opts.message.user}>`
+        }
+      }
+    ];
+    this.notify(message, env.SLACK.ANNOUNCEMENTS_URI);
   }
 
   sharePlaylist(opts) {
