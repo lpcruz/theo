@@ -36,10 +36,11 @@ class Server {
     
   async initSlackListener() {
     await app.use('/slack/events', slackEvents.expressMiddleware());
+    // reaction trigger
     slackEvents.on('reaction_added', async message => {
       const playlistSearch = await this.spotify.searchPlaylists(message.reaction);
       const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
-      this.slack.sharePlaylist(message, randomPlaylist);
+      this.slack.sharePlaylist({ message, randomPlaylist });
     });
 
     await slackEvents.on('app_mention', async (message, body) => {
@@ -53,31 +54,24 @@ class Server {
       if (!message.subtype && message.text.match(PATTERNS.SEARCH)) {
         const search = message.text.split('search').pop();
         const location = message.text.split('in').pop();
-        this.yelp.getBiz(search, location).then(biz => {
-          this.yelp.getBizReviews(biz.alias).then(review => {
-            this.slack.shareYelpBusiness(`I know a great place to get some${search} called <${biz.url}|${biz.name}>. It has a ${biz.rating}/5 rating:\n\n*${biz.name}*\n${biz.location.display_address}`, review);
-          })
-        })
+        const biz = await this.yelp.getBiz(search, location);
+        const review = await this.yelp.getBizReviews(biz.alias);
+        this.slack.shareYelpBusiness({ message, search, biz, review });
       }
 
       // weather
       if (!message.subtype && message.text.match(PATTERNS.WEATHER)) {
         const location = message.text.split('in').pop();
-        this.weather.getTemp(location).then(weather => {
-          if (weather.main === undefined) {
-            this.slack.giveTheWeather(`Sorry about that! I can't seem to get the any weather information in${location} at this time.`, weather);
-          } else {
-            this.slack.giveTheWeather(`Here's the weather in${location}`, weather);
-          }
-        })
+        const weather = await this.weather.getTemp(location);
+        this.slack.giveTheWeather({ message, location, weather });
       }
 
-      //spotify
+      // spotify feelings
       if (!message.subtype && message.text.match(PATTERNS.SPOTIFY_PLAYLIST)) {
         const query = message.text.split('feeling').pop()
         const playlistSearch = await this.spotify.searchPlaylists(query);
         const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
-        this.slack.sharePlaylist(message, randomPlaylist);
+        this.slack.sharePlaylist({ message, randomPlaylist });
       }
 
     });
