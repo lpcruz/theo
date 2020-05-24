@@ -59,22 +59,26 @@ class Slack {
     if (drinkReactions.includes(opts.reaction)) {
       message = `<@${opts.user}> :${opts.reaction}: Arriba! Abajo! Al Centro! Pa' Dentro! :${opts.reaction}:\n I'm pretty good at spanish, right? Should I practice in #spanishpractice? :joy:\nHere's a playlist to toast to!`;
     }
-    
-    this.notify(message,
-      {
-        type: 'section',
-        block_id: 'section567',
-        text: {
-          type: 'mrkdwn',
-          text: `:headphones: <${playlist.external_urls.spotify}|${playlist.name}> \n ${playlist.description || `A playlist about :${opts.reaction}:`} `
-        },
-        accessory: {
-          type: 'image',
-          image_url: playlist.images[0].url,
-          alt_text: `A playlist image triggered by ${opts.reaction}`
-        }
-      }, env.SLACK.MUSIC_URI
-    )
+
+    // This will isolate the reaction and feeling triggers to the #music channel
+    // @todo: Make this...better - lcruz
+    if (opts.item.channel === 'C01411DMYGK') {
+      this.notify(message,
+        {
+          type: 'section',
+          block_id: 'section567',
+          text: {
+            type: 'mrkdwn',
+            text: `:headphones: <${playlist.external_urls.spotify}|${playlist.name}> \n ${playlist.description || `A playlist about :${opts.reaction}:`} `
+          },
+          accessory: {
+            type: 'image',
+            image_url: playlist.images[0].url,
+            alt_text: `A playlist image triggered by ${opts.reaction}`
+          }
+        }, env.SLACK.MUSIC_URI
+      )
+    }
   }
 
   shareYelpBusiness(message, review) {
