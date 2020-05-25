@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const request = require('request');
 const slackEventsApi = require('@slack/events-api');
+const figlet = require('figlet');
 const app = express();
 
 const env = require('../config/env');
@@ -79,8 +80,15 @@ class Server {
   }  
 
   init(port) {
-    app.listen(port, function () {
-      console.log(`Theo listening on ${port}`);
+    app.listen(port, () => {
+      figlet('Theo', (err, data) => {
+        if (err) {
+          console.log('Something went wrong...');
+          console.dir(err);
+        }
+        console.log(data);
+        console.log(`Theo listening on ${port}`);
+      });
     })
     return this;
   }
