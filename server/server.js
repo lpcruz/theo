@@ -84,6 +84,11 @@ class Server {
         this.slack.giveCovidDataByState({ message, covid19StateData });
       }
 
+      // help
+      if (!message.subtype && message.text.match(PATTERNS.HELP)) {
+        this.slack.help({ message });
+      }
+
     });
     return this;
   }  

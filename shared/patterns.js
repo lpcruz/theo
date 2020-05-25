@@ -4,6 +4,7 @@ const PATTERNS = {
   WEATHER: /(weather in)|(temperature in)|(forecast in)/,
   SPOTIFY_PLAYLIST: /(feeling)/g,
   COVID19: /(covid19 data for)/g,
+  HELP: /(assist)|(help)/g,
 };
 
 module.exports = PATTERNS;

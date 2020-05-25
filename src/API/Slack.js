@@ -198,6 +198,42 @@ class Slack {
     ];
     this.notify(message, channel);
   }
+  
+  help(opts) {
+    const channel = getChannel(opts.message.channel);
+    const message = [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `:wave: Hi <@${opts.message.user}> Need help? I'm Theo and am you're friendly neighborhood sidekick. I'm still learning new things but below is a list of commands and things that I can do for you. Mention me before each!`
+        }
+      },
+      {
+        type: 'section',
+        block_id: 'section789',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: '*Search for Businesses:*\n search `business` in `location`'
+          },
+          {
+            type: 'mrkdwn',
+            text: '*Get a Spotify Playlist (only available in the #music channel):*\n feeling `feeling`'
+          },
+          {
+            type: 'mrkdwn',
+            text: '*Get Weather:*\n weather in `location`'
+          },
+          {
+            type: 'mrkdwn',
+            text: '*Get Covid19 Data (only available for US States):*\n covid19 data for `US State`'
+          }
+        ]
+      }
+    ];
+    this.notify(message, channel);
+  }
 }
 
 module.exports = Slack;
