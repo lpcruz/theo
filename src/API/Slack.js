@@ -159,7 +159,7 @@ class Slack {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `:bar_chart: Sure! Providing real-time COVID-19 data for ${opts.covid19StateData[0].USAState}:`
+          text: `:bar_chart: :earth_americas: Providing real-time COVID-19 data for ${opts.covid19StateData[0].USAState}:`
         }
       },
       {
@@ -177,6 +177,14 @@ class Slack {
           {
             type: 'mrkdwn',
             text: `*Total Tests*\n${opts.covid19StateData[0].TotalTests}`
+          },
+          {
+            type: 'mrkdwn',
+            text: `*New Casess*\n${opts.covid19StateData[0].NewCases || '0'}`
+          },
+          {
+            type: 'mrkdwn',
+            text: `*New Deaths*\n${opts.covid19StateData[0].NewDeaths || '0'}`
           }
         ]
       },
@@ -184,7 +192,7 @@ class Slack {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: 'For more information, please see the <https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html|CDC Website> and wash your hands! :earth_americas:'
+          text: 'For more information, please see the <https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html|CDC Website> and wash your hands! :open_hands:'
         }
       }
     ];
