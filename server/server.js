@@ -80,7 +80,7 @@ class Server {
 
   init(port) {
     app.listen(port, function () {
-      console.log(`Bot listening on ${port}`);
+      console.log(`Theo listening on ${port}`);
     })
     return this;
   }
