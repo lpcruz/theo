@@ -62,7 +62,6 @@ class Slack {
   }
 
   sharePlaylist(opts) {
-    console.log(opts)
     let greeting;
     if (opts.message.text) {
       greeting = `<@${opts.message.user}> feeling${opts.message.text.split('feeling').pop()}? I got a playlist for you!`;
@@ -139,6 +138,44 @@ class Slack {
         text: {
           type: 'mrkdwn',
           text: `It is currently ${Math.floor(opts.weather.main.temp)}°F with ${opts.weather.weather[0].description}`
+        }
+      }
+    ];
+    this.notify(message, env.SLACK.ANNOUNCEMENTS_URI);
+  }
+
+  giveCovidDataByState(opts) {
+    const message = [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `:bar_chart: Sure! Providing real-time COVID-19 data for ${opts.covid19StateData[0].USAState}:`
+        }
+      },
+      {
+        type: 'section',
+        block_id: 'section789',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: `*Total Cases*\n${opts.covid19StateData[0].TotalCases}`
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Total Deaths*\n${opts.covid19StateData[0].TotalDeaths}`
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Total Tests*\n${opts.covid19StateData[0].TotalTests}`
+          }
+        ]
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: 'For more information, please see the <https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html|CDC Website> and wash your hands! :earth_americas:'
         }
       }
     ];

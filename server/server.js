@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const request = require('request');
+const request = require('request-promise');
 const slackEventsApi = require('@slack/events-api');
 const figlet = require('figlet');
 const app = express();
@@ -16,6 +16,7 @@ const Yelp = require('../src/API/Yelp');
 const Weather = require('../src/API/Weather');
 const SpotifyClient = require('../src/API/SpotifyClient');
 const SpotifyAPI = require('../src/API/Spotify');
+const Covid19 = require('../src/API/Covid19');
 
 class Server {
   constructor() {
@@ -23,6 +24,7 @@ class Server {
     this.yelp = new Yelp();
     this.weather = new Weather();
     this.spotify = new SpotifyAPI(SpotifyClient);
+    this.covid19 = new Covid19(request);
   }
 
   setUp() {
@@ -73,6 +75,13 @@ class Server {
         const playlistSearch = await this.spotify.searchPlaylists(query);
         const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
         this.slack.sharePlaylist({ message, randomPlaylist });
+      }
+
+      // covid19
+      if (!message.subtype && message.text.match(PATTERNS.COVID19)) {
+        const state = message.text.split('for').pop();
+        const covid19StateData = await this.covid19.getCovidDataByState(state)
+        this.slack.giveCovidDataByState({ message, covid19StateData });
       }
 
     });

@@ -6,6 +6,7 @@
   "dependencies": {
     "@slack/events-api": "^2.2.0",
     "chai": "^4.2.0",
+    "covid19-api": "^1.2.1",
     "dotenv": "^8.0.0",
     "emoji-name-map": "^1.2.8",
     "express": "^4.16.4",
