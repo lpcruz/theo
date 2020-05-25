@@ -7,6 +7,7 @@ module.exports = {
     NOM_NOM_URI: process.env.NOM_NOM_URI,
     MUSIC_URI: process.env.MUSIC_URI,
     ANNOUNCEMENTS_URI: process.env.ANNOUNCEMENTS_URI,
+    SPANISH_PRACTICE_URI: process.env.SPANISH_PRACTICE_URI,
     DEV_URI: process.env.DEV_URI
   },
   

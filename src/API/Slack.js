@@ -3,6 +3,11 @@ const request = require('request');
 const env = require('../../config/env');
 const CHANNELS = require('../../shared/channels');
 
+function getChannel(message) {
+  const channel = CHANNELS.filter(channel => channel.CHANNEL_ID === message);
+  return channel[0].SLACK_HOOK;
+};
+
 const foodReactions = [
   'pizza',
   'sushi',
@@ -48,6 +53,7 @@ class Slack {
   }
 
   greet(opts) {
+    const channel = getChannel(opts.message.channel);
     const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
     const message = [
       {
@@ -58,7 +64,7 @@ class Slack {
         }
       }
     ];
-    this.notify(message, env.SLACK.ANNOUNCEMENTS_URI);
+    this.notify(message, channel);
   }
 
   sharePlaylist(opts) {
@@ -99,12 +105,13 @@ class Slack {
         }
       }
     ];
-    if (opts.message.channel === CHANNELS.MUSIC) {
+    if (opts.message.channel === 'C01411DMYGK' || opts.message.item.channel === 'C01411DMYGK') {
       this.notify(message, env.SLACK.MUSIC_URI);
     }
   }
 
   shareYelpBusiness(opts) {
+    const channel = getChannel(opts.message.channel);
     const message = [
       {
         type: 'section',
@@ -121,10 +128,11 @@ class Slack {
         }
       }
     ];
-    this.notify(message, env.SLACK.NOM_NOM_URI);
+    this.notify(message, channel);
   }
 
   giveTheWeather(opts) {
+    const channel = getChannel(opts.message.channel);
     const message = [
       {
         type: 'section',
@@ -141,10 +149,11 @@ class Slack {
         }
       }
     ];
-    this.notify(message, env.SLACK.ANNOUNCEMENTS_URI);
+    this.notify(message, channel);
   }
 
   giveCovidDataByState(opts) {
+    const channel = getChannel(opts.message.channel);
     const message = [
       {
         type: 'section',
@@ -179,7 +188,7 @@ class Slack {
         }
       }
     ];
-    this.notify(message, env.SLACK.ANNOUNCEMENTS_URI);
+    this.notify(message, channel);
   }
 }
 
