@@ -105,7 +105,14 @@ class Slack {
         }
       }
     ];
-    if (opts.message.channel === 'C01411DMYGK' || opts.message.item.channel === 'C01411DMYGK') {
+    
+    if (opts.message.channel) {
+      const channel = getChannel(opts.message.channel);
+      this.notify(message, channel);
+      return;
+    }
+
+    if (opts.message.item.channel === 'C01411DMYGK') {
       this.notify(message, env.SLACK.MUSIC_URI);
     }
   }
@@ -138,7 +145,7 @@ class Slack {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `Here's the weather in${opts.location} for today. Wash your hands and wear a mask if you go outside!`
+          text: `Here's the weather in${opts.location} for today. Wash your hands and wear a mask if you go outside! :mask:`
         }
       },
       {
