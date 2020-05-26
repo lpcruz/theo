@@ -20,6 +20,16 @@ const CHANNELS = [
     NAME: '#announcements',
     CHANNEL_ID: 'C013Y3RRX0A',
     SLACK_HOOK: SLACK.ANNOUNCEMENTS_URI
+  },
+  {
+    NAME: '#spanishpractice',
+    CHANNEL_ID: 'C013MJEBM1V',
+    SLACK_HOOK: SLACK.SPANISH_PRACTICE_URI
+  },
+  {
+    NAME: '#workouts',
+    CHANNEL_ID: 'C013ZG431EJ',
+    SLACK_HOOK: SLACK.WORKOUTS_URI
   }
 ];
 

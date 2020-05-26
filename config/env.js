@@ -8,7 +8,8 @@ module.exports = {
     MUSIC_URI: process.env.MUSIC_URI,
     ANNOUNCEMENTS_URI: process.env.ANNOUNCEMENTS_URI,
     SPANISH_PRACTICE_URI: process.env.SPANISH_PRACTICE_URI,
-    DEV_URI: process.env.DEV_URI
+    DEV_URI: process.env.DEV_URI,
+    WORKOUTS_URI: process.env.WORKOUTS_URI
   },
   
   YELP: {
