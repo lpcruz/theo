@@ -112,8 +112,9 @@ class Slack {
       return;
     }
 
-    if (opts.message.item.channel === 'C01411DMYGK') {
-      this.notify(message, env.SLACK.MUSIC_URI);
+    if (opts.message.item.channel === 'C01411DMYGK' || opts.message.item.channel === 'C0145H2QG74') {
+      const channel = getChannel(opts.message.item.channel);
+      this.notify(message, channel);
     }
   }
 
