@@ -30,7 +30,7 @@ const message = opts => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `@here Tomorrow's workout! Have *fun* and *pace* yourself. Let #workouts know how it went! :woman-lifting-weights: :man-lifting-weights: :muscle: :muscle: `
+        text: `@here Tomorrow's workout! Have *fun* and *pace* yourself.\n You can even ask me for a workout playlist. :headphones::musical_note:\nLet #workouts know how it went! :woman-lifting-weights: :man-lifting-weights: :muscle: :muscle: `
       }
     },
     {
