@@ -97,7 +97,7 @@ class Server {
 
   wod() {
     const freq = '00 18 * * *';
-    const callback = () => getWodForToday(env.SLACK.DEV_URI);
+    const callback = () => getWodForToday(env.SLACK.WORKOUTS_URI);
     const options = { timezone: 'America/New_York' };
     cron.schedule(freq, callback, options).start();
   }
