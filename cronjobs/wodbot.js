@@ -30,28 +30,28 @@ const message = opts => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `@here Tomorrow's workout! Have *fun* and *pace* yourself.\n You can even ask me for a workout playlist. :headphones::musical_note:\nLet #workouts know how it went! :woman-lifting-weights: :man-lifting-weights: :muscle: :muscle: `
+        text: `@here Tomorrow's workout! Have *fun* and *pace* yourself. Drink a ton of water.\n You can even ask me for a workout playlist. :headphones::musical_note:\nLet #workouts know how it went!`
       }
     },
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*Warmup - * ${randomizeWarmup(WARMUPS)}`
+        text: `:muscle: *Warmup - * ${randomizeWarmup(WARMUPS)}`
       }
     },
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*WOD - * *${opts.rounds}*:${opts.wod}`
+        text: `:muscle: *WOD - * *${opts.rounds}*:${opts.wod}`
       }
     },
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*How-to Videos:*\n${JSON.stringify(opts.videos, '', 1).replace(/[{}",]/g, '')}`
+        text: `:tv: *How-to Videos:*\n${opts.videoLinks}`
       }
     }
   ];
@@ -62,11 +62,15 @@ const getWodForToday = channel => htmlToJson.request(feed, data, (err, result) =
   const today = json.date[0];
   const rounds = json.rounds[0];
   const wod = json.wod[0].replace(/\t/g, '');
-  const videos = json.videos.reduce((result, field, index) => {
-    result[json.workout[index]] = field;
+  const videos = json.workout.reduce((result, field, index) => {
+    result[json.videos[index]] = field;
     return result;
   }, {});
-  new Slack().notify(message({ today, rounds, wod, videos }), channel);
+  const formatVideoLinks = Object.entries(videos).map(link => {
+    return link.join('|').split(',').map(i => '<' + i + '>').join('|');
+  });
+  const videoLinks = formatVideoLinks.join('\n');
+  new Slack().notify(message({ today, rounds, wod, videoLinks }), channel);
 });
 
 module.exports = {
