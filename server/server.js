@@ -3,6 +3,7 @@ const express = require('express');
 const request = require('request-promise');
 const slackEventsApi = require('@slack/events-api');
 const figlet = require('figlet');
+const cron = require('node-cron');
 const app = express();
 
 const env = require('../config/env');
@@ -17,6 +18,7 @@ const Weather = require('../src/API/Weather');
 const SpotifyClient = require('../src/API/SpotifyClient');
 const SpotifyAPI = require('../src/API/Spotify');
 const Covid19 = require('../src/API/Covid19');
+const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
   constructor() {
@@ -91,7 +93,14 @@ class Server {
 
     });
     return this;
-  }  
+  }
+
+  wod() {
+    const freq = '00 18 * * *';
+    const callback = () => getWodForToday(env.SLACK.DEV_URI);
+    const options = { timezone: 'America/New_York' };
+    cron.schedule(freq, callback, options).start();
+  }
 
   init(port) {
     app.listen(port, () => {

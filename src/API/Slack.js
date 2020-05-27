@@ -5,7 +5,7 @@ const CHANNELS = require('../../shared/channels');
 function getChannel(message) {
   const channel = CHANNELS.filter(channel => channel.CHANNEL_ID === message);
   return channel[0].SLACK_HOOK;
-};
+}
 
 const foodReactions = [
   'pizza',
