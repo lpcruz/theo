@@ -18,5 +18,9 @@ module.exports = {
 
   WEATHER: {
     WEATHER_API_KEY: process.env.WEATHER_API_KEY
+  },
+
+  SPOONACULAR: {
+    SPOONACULAR_API_KEY: process.env.SPOONACULAR_API_KEY
   }
 }

@@ -159,6 +159,27 @@ class Slack {
     this.notify(message, channel);
   }
 
+  shareRecipeList(opts) {
+    const channel = getChannel(opts.message.channel);
+    const message = [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `I found this recipe for ${opts.query}. If you want another one, just ask me again!`
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `<${opts.randomRecipe.sourceUrl}|${opts.randomRecipe.title}>\n*Ready Time (min):* ${opts.randomRecipe.readyInMinutes}\n*Servings:* ${opts.randomRecipe.servings}` 
+        }
+      }
+    ];
+    this.notify(message, channel);
+  }
+
   giveCovidDataByState(opts) {
     const channel = getChannel(opts.message.channel);
     const message = [

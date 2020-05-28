@@ -18,6 +18,7 @@ const Weather = require('../src/API/Weather');
 const SpotifyClient = require('../src/API/SpotifyClient');
 const SpotifyAPI = require('../src/API/Spotify');
 const Covid19 = require('../src/API/Covid19');
+const Spoonacular = require('../src/API/Spoonacular');
 const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
@@ -27,6 +28,7 @@ class Server {
     this.weather = new Weather();
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.covid19 = new Covid19(request);
+    this.spoonacular = new Spoonacular();
   }
 
   setUp() {
@@ -62,6 +64,16 @@ class Server {
         const biz = await this.yelp.getBiz(search, location);
         const review = await this.yelp.getBizReviews(biz.alias);
         this.slack.shareYelpBusiness({ message, search, biz, review });
+      }
+
+      // recipes
+      if (!message.subtype && message.text.match(PATTERNS.RECIPES)) {
+        const query = message.text.split('for').pop().trim();
+        const res = await this.spoonacular.getRecipes(query);
+        const recipes = JSON.parse(res);
+        const randomRecipe = recipes.results[Math.floor(Math.random() * recipes.results.length)];
+        console.log(randomRecipe)
+        this.slack.shareRecipeList({ message, query, randomRecipe });
       }
 
       // weather
