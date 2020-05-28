@@ -22,5 +22,9 @@ module.exports = {
 
   SPOONACULAR: {
     SPOONACULAR_API_KEY: process.env.SPOONACULAR_API_KEY
+  },
+
+  UNSPLASH: {
+    UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_API_ACCESS_KEY
   }
 }

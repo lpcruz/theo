@@ -174,6 +174,11 @@ class Slack {
         text: {
           type: 'mrkdwn',
           text: `<${opts.randomRecipe.sourceUrl}|${opts.randomRecipe.title}>\n*Ready Time (min):* ${opts.randomRecipe.readyInMinutes}\n*Servings:* ${opts.randomRecipe.servings}` 
+        },
+        accessory: {
+          type: 'image',
+          image_url: opts.photo,
+          alt_text: `A photo of ${opts.randomRecipe.title}`
         }
       }
     ];

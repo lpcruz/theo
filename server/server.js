@@ -19,6 +19,7 @@ const SpotifyClient = require('../src/API/SpotifyClient');
 const SpotifyAPI = require('../src/API/Spotify');
 const Covid19 = require('../src/API/Covid19');
 const Spoonacular = require('../src/API/Spoonacular');
+const Unsplash = require('../src/API/Unsplash');
 const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
@@ -29,6 +30,7 @@ class Server {
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.covid19 = new Covid19(request);
     this.spoonacular = new Spoonacular();
+    this.unsplash = new Unsplash();
   }
 
   setUp() {
@@ -72,8 +74,9 @@ class Server {
         const res = await this.spoonacular.getRecipes(query);
         const recipes = JSON.parse(res);
         const randomRecipe = recipes.results[Math.floor(Math.random() * recipes.results.length)];
-        console.log(randomRecipe)
-        this.slack.shareRecipeList({ message, query, randomRecipe });
+        const photoSearch = JSON.parse(await this.unsplash.getPhoto(query));
+        const photo = photoSearch.results[0].urls.thumb;
+        this.slack.shareRecipeList({ message, query, randomRecipe, photo });
       }
 
       // weather
