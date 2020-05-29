@@ -35,7 +35,7 @@ class Server {
 
   setUp() {
     return this
-      .init(4390)
+      .init(env.PORT || 4390)
       .auth()
       .get('/')
       .get('/oauth')
@@ -135,9 +135,6 @@ class Server {
   }
 
   init(port) {
-    if (env.NODE_ENV === 'production') {
-      port = 8080;
-    }
     app.listen(port, () => {
       figlet('Theo', (err, data) => {
         if (err) {
