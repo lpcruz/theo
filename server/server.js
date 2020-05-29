@@ -136,7 +136,7 @@ class Server {
 
   init(port) {
     if (env.NODE_ENV === 'production') {
-      port = 80;
+      port = 8080;
     }
     app.listen(port, () => {
       figlet('Theo', (err, data) => {
