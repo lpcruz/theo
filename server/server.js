@@ -79,6 +79,18 @@ class Server {
         this.slack.shareRecipeList({ message, query, randomRecipe, photo });
       }
 
+      // recipe based on ingredients
+      if (!message.subtype && message.text.match(PATTERNS.INGREDIENTS_BASED_RECIPE)) {
+        const query = message.text.split('using').pop().trim().split(',').join('');
+        const res = await this.spoonacular.getRecipesBasedOnIngredients(query);
+        const recipes = JSON.parse(res);
+        const result = recipes[Math.floor(Math.random() * recipes.length)];
+        const search = JSON.parse(await this.spoonacular.getRecipes(result.title));
+        const randomRecipe = search.results[[Math.floor(Math.random() * recipes.length)]];
+        const photo = result.image;
+        this.slack.shareRecipeList({ message, query, randomRecipe, photo });
+      }
+
       // weather
       if (!message.subtype && message.text.match(PATTERNS.WEATHER)) {
         const location = message.text.split('in').pop();
