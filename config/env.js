@@ -1,5 +1,6 @@
 module.exports = {
-  /* eslint-disable no-undef */
+/* eslint-disable no-undef */
+  NODE_ENV: process.env.NODE_ENV,
   SLACK: {
     SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
     SLACK_CLIENT_SECRET: process.env.SLACK_CLIENT_SECRET,
