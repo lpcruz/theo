@@ -75,7 +75,12 @@ class Server {
         const recipes = JSON.parse(res);
         const randomRecipe = recipes.results[Math.floor(Math.random() * recipes.results.length)];
         const photoSearch = JSON.parse(await this.unsplash.getPhoto(query));
-        const photo = photoSearch.results[0].urls.thumb;
+        let photo;
+        if (photoSearch.results.length === 0) {
+          photo = 'https://previews.123rf.com/images/pavelstasevich/pavelstasevich1811/pavelstasevich181101065/112815953-no-image-available-icon-flat-vector.jpg';
+        } else {
+          photo = photoSearch.results[0].urls.thumb;
+        }
         this.slack.shareRecipeList({ message, query, randomRecipe, photo });
       }
 
