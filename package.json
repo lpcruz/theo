@@ -24,7 +24,7 @@
     "figlet": "^1.4.0"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "npm install && node app.js",
     "tests": "mocha ./test/travis.spec.js",
     "lint:server": "eslint ./server",
     "theo": "node app.js"
