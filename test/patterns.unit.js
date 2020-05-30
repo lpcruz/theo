@@ -87,12 +87,10 @@ describe('Patterns', () => {
     });
   });
     
-  describe('HELP', () => {
-    it('should retrieve a matching string if a user says "assist"', () => {
-      const string = '@theo assist me!';
-      const actual = string.match(PATTERNS.HELP);
-      assert.deepStrictEqual(actual.join(''), 'assist');
-    });
+  it('should retrieve a matching string if a user says "assist"', () => {
+    const string = '@theo assist me!';
+    const actual = string.match(PATTERNS.HELP);
+    assert.deepStrictEqual(actual.join(''), 'assist');
   });
     
   describe('RECIPES', () => {
@@ -102,13 +100,11 @@ describe('Patterns', () => {
       assert.deepStrictEqual(actual.pop(), 'recipe for');
     });
   });
-    
-  describe('RECIPES', () => {
-    it('should retrieve a matching string if a user says "recipes for"', () => {
-      const string = '@theo recipes for pizza';
-      const actual = string.match(PATTERNS.RECIPES);
-      assert.deepStrictEqual(actual.pop(), 'recipes for');
-    });
+
+  it('should retrieve a matching string if a user says "recipes for"', () => {
+    const string = '@theo recipes for pizza';
+    const actual = string.match(PATTERNS.RECIPES);
+    assert.deepStrictEqual(actual.pop(), 'recipes for');
   });
     
   describe('INGREDIENTS_BASED_RECIPE', () => {
