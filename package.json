@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Assistant for mabel and I",
   "main": "app.js",
+  "scripts": {
+    "start": "npm install && node app.js",
+    "tests": "mocha ./test/travis.spec.js",
+    "lint:server": "eslint ./server",
+    "theo": "node app.js"
+  },
   "dependencies": {
     "@slack/events-api": "^2.2.0",
     "chai": "^4.2.0",
@@ -22,12 +28,6 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0"
-  },
-  "scripts": {
-    "start": "npm install && node app.js",
-    "tests": "mocha ./test/travis.spec.js",
-    "lint:server": "eslint ./server",
-    "theo": "node app.js"
   },
   "repository": {
     "type": "git",
