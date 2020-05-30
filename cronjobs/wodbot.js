@@ -74,5 +74,6 @@ const getWodForToday = channel => htmlToJson.request(feed, data, (err, result) =
 });
 
 module.exports = {
-  getWodForToday
+  getWodForToday,
+  randomizeWarmup,
 }
