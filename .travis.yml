@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - "12"
 scripts:
-  - npm run tests
+  - npm run lint:server
+  - npm run test:unit

@@ -5,13 +5,13 @@
   "main": "app.js",
   "scripts": {
     "start": "npm install && node app.js",
-    "tests": "mocha ./test/travis.spec.js",
+    "test:unit": "mocha test/*.unit.js",
+    "test:integration": "mocha test/*.integration.js",
     "lint:server": "eslint ./server",
     "theo": "node app.js"
   },
   "dependencies": {
     "@slack/events-api": "^2.2.0",
-    "chai": "^4.2.0",
     "covid19-api": "^1.2.1",
     "dotenv": "^8.0.0",
     "emoji-name-map": "^1.2.8",

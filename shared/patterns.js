@@ -1,7 +1,7 @@
 const PATTERNS = {
   GREETINGS: /\bhi|\bhey\b|\byo\b|hello\b/gi,
   SEARCH: /(search)/g,
-  WEATHER: /(weather in)|(temperature in)|(forecast in)/,
+  WEATHER: /(weather in)|(temperature in)|(forecast in)/g,
   SPOTIFY_PLAYLIST: /(feeling)/g,
   COVID19: /(covid19 data for)/g,
   HELP: /(assist)|(help)/g,
