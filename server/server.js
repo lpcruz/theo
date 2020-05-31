@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const request = require('request-promise');
 const slackEventsApi = require('@slack/events-api');
 const figlet = require('figlet');
@@ -149,8 +150,8 @@ class Server {
   }
 
   get(route) {
-    app.get(route, function(req,res) {
-      res.send(`Server is up and running. Nothing to see here.`);
+    app.get(route, (req,res) => {
+      res.sendFile('index.html', { root: path.join(__dirname, '../public/')});
     })
     return this;
   }
