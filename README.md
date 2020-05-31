@@ -1,8 +1,11 @@
+<p align="center">
+<img src='./public/assets/theo.png' height="90" width="90"/>
+
 [![Build Status](https://travis-ci.com/lpcruz/theo.svg?branch=master)](https://travis-ci.com/lpcruz/theo)
 # theo
 Your friendly neighborhood sidekick sloth.
 
-![image](./assets/theo-demo.png)
+![image](./public/assets/theo-demo.png)
 
 # How it works
 Theo listens for patterns when mentioned in [Slack](https://www.slack.com) and responds back with information such as weather, businesses, recipes, workouts, news and more!
