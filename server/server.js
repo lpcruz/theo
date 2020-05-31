@@ -150,7 +150,8 @@ class Server {
   }
 
   get(route) {
-    app.get(route, (req,res) => {
+    app.get(route, (req, res) => {
+      /* eslint-disable no-undef */
       res.sendFile('index.html', { root: path.join(__dirname, '../public/')});
     })
     return this;
