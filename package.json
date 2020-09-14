@@ -18,7 +18,7 @@
     "express": "^4.16.4",
     "figlet": "^1.4.0",
     "html-to-json": "^0.6.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mocha": "^6.1.4",
     "node-cron": "^2.0.3",
     "request": "^2.88.0",
