@@ -25,15 +25,7 @@ const randomizeWarmup = warmups => {
   return warmups[keys[keys.length * Math.random() << 0]];
 };
 const message = opts => {
-  return [
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: `@here Tomorrow's workout! Have *fun* and *pace* yourself. Drink a ton of water.\n You can even ask me for a workout playlist. :headphones::musical_note:\nLet #workouts know how it went!`
-      }
-    },
-    {
+  return [{
       type: 'section',
       text: {
         type: 'mrkdwn',
@@ -70,7 +62,12 @@ const getWodForToday = channel => htmlToJson.request(feed, data, (err, result) =
     return link.join('|').split(',').map(i => '<' + i + '>').join('|');
   });
   const videoLinks = formatVideoLinks.join('\n');
-  new Slack().notify(message({ today, rounds, wod, videoLinks }), channel);
+  new Slack().notify(message({
+    today,
+    rounds,
+    wod,
+    videoLinks
+  }), channel);
 });
 
 module.exports = {
