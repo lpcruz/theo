@@ -184,53 +184,6 @@ class Slack {
     ];
     this.notify(message, channel);
   }
-
-  giveCovidDataByState(opts) {
-    const channel = getChannel(opts.message.channel);
-    const message = [
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `:bar_chart: :earth_americas: Providing real-time COVID-19 data for ${opts.covid19StateData[0].USAState}:`
-        }
-      },
-      {
-        type: 'section',
-        block_id: 'section789',
-        fields: [
-          {
-            type: 'mrkdwn',
-            text: `*Total Cases*\n${opts.covid19StateData[0].TotalCases}`
-          },
-          {
-            type: 'mrkdwn',
-            text: `*Total Deaths*\n${opts.covid19StateData[0].TotalDeaths}`
-          },
-          {
-            type: 'mrkdwn',
-            text: `*Total Tests*\n${opts.covid19StateData[0].TotalTests}`
-          },
-          {
-            type: 'mrkdwn',
-            text: `*New Casess*\n${opts.covid19StateData[0].NewCases || '0'}`
-          },
-          {
-            type: 'mrkdwn',
-            text: `*New Deaths*\n${opts.covid19StateData[0].NewDeaths || '0'}`
-          }
-        ]
-      },
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: 'For more information, please see the <https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html|CDC Website> and wash your hands! :open_hands:'
-        }
-      }
-    ];
-    this.notify(message, channel);
-  }
   
   help(opts) {
     const channel = getChannel(opts.message.channel);
@@ -257,10 +210,6 @@ class Slack {
           {
             type: 'mrkdwn',
             text: '*Get Weather:*\n weather in `location`'
-          },
-          {
-            type: 'mrkdwn',
-            text: '*Get Covid19 Data (only available for US States):*\n covid19 data for `US State`'
           }
         ]
       }

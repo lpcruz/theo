@@ -6,13 +6,13 @@
   "scripts": {
     "start": "npm install && node app.js",
     "test:unit": "jest __tests__/*.unit.js",
+    "test:unit:watch": "npm run test:unit -- --watch",
     "test:unit:coverage": "npm run test:unit -- --collectCoverage",
     "lint:server": "eslint ./server",
     "theo": "node app.js"
   },
   "dependencies": {
     "@slack/events-api": "^2.2.0",
-    "covid19-api": "^1.2.1",
     "dotenv": "^8.0.0",
     "emoji-name-map": "^1.2.8",
     "express": "^4.16.4",

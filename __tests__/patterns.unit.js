@@ -68,14 +68,6 @@ describe('Patterns', () => {
       expect(actual.join('')).toEqual('feeling');
     });
   });
-    
-  describe('COVID19', () => {
-    it('should retrieve a matching string if a user says "covid19 data for"', () => {
-      const string = '@theo covid19 data for nyc';
-      const actual = string.match(PATTERNS.COVID19);
-      expect(actual.pop()).toEqual('covid19 data for');
-    });
-  });
 
   describe('HELP', () => {
     it('should retrieve a matching string if a user says "help"', () => {
