@@ -24,7 +24,7 @@ const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
   constructor() {
-    this.slack = new Slack();
+    this.slack = new Slack(request);
     this.yelp = new Yelp();
     this.weather = new Weather();
     this.spotify = new SpotifyAPI(SpotifyClient);

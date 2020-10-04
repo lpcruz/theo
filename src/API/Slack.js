@@ -1,5 +1,4 @@
-const request = require('request');
-
+'use strict';
 const CHANNELS = require('../../shared/channels');
 
 function getChannel(message) {
@@ -38,8 +37,12 @@ const greetings = [
 ];
 
 class Slack {
+  constructor(request) {
+    this.request = request;
+  }
+
   notify(message, channel) {
-    request({
+    this.api({
       uri: channel,
       method: 'POST',
       headers: {
