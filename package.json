@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "npm install && node app.js",
-    "test:unit": "mocha test/*.unit.js",
-    "test:integration": "mocha test/*.integration.js",
+    "test:unit": "jest __tests__/*.unit.js",
+    "test:unit:coverage": "npm run test:unit -- --collectCoverage",
     "lint:server": "eslint ./server",
     "theo": "node app.js"
   },
@@ -19,7 +19,6 @@
     "figlet": "^1.4.0",
     "html-to-json": "^0.6.0",
     "lodash": "^4.17.19",
-    "mocha": "^6.1.4",
     "node-cron": "^2.0.3",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
@@ -27,7 +26,8 @@
     "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.1.0"
+    "eslint": "^7.1.0",
+    "jest": "^26.4.2"
   },
   "repository": {
     "type": "git",

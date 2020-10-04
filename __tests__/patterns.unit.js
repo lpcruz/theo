@@ -1,45 +1,43 @@
   
-const assert = require('chai').assert;
-
 const PATTERNS = require('../shared/patterns')
-/* eslint-disable no-undef */
+
 describe('Patterns', () => {
   describe('GREETINGS', () => {
     it('should retrieve a matching string if a user says "hi"', () => {
       const string = '@theo hi there my friend!';
       const actual = string.match(PATTERNS.GREETINGS);
-      assert.deepStrictEqual(actual.join(''), 'hi');
+      expect(actual.join('')).toEqual('hi');
     });
       
     it('should retrieve a matching string if a user says "hey"', () => {
       const string = '@theo hey!';
       const actual = string.match(PATTERNS.GREETINGS);
-      assert.deepStrictEqual(actual.join(''), 'hey');
+      expect(actual.join('')).toEqual('hey');
     });
     
     it('should retrieve a matching string if a user says "hey"', () => {
       const string = '@theo yo!!!';
       const actual = string.match(PATTERNS.GREETINGS);
-      assert.deepStrictEqual(actual.join(''), 'yo');
+      expect(actual.join('')).toEqual('yo');
     });
     
     it('should retrieve a matching string if a user says "hello"', () => {
       const string = '@theo hello!';
       const actual = string.match(PATTERNS.GREETINGS);
-      assert.deepStrictEqual(actual.join(''), 'hello');
+      expect(actual.join('')).toEqual('hello');
     });
       
     it('should be null when a string does not match', () => {
       const string = '@theo';
       const actual = string.match(PATTERNS.GREETINGS);
-      assert.deepStrictEqual(actual, null);
+      expect(actual).toEqual(null);
     });
   });
   describe('SEARCH', () => {
     it('should retrieve a matching string if a user says "search"', () => {
       const string = '@theo search for bars in nyc';
       const actual = string.match(PATTERNS.SEARCH);
-      assert.deepStrictEqual(actual.join(''), 'search');
+      expect(actual.join('')).toEqual('search');
     });
   });
     
@@ -47,19 +45,19 @@ describe('Patterns', () => {
     it('should retrieve a matching string if a user says "weather in"', () => {
       const string = '@theo weather in nyc';
       const actual = string.match(PATTERNS.WEATHER);
-      assert.deepStrictEqual(actual.pop(), 'weather in');
+      expect(actual.pop()).toEqual('weather in');
     });
       
     it('should retrieve a matching string if a user says "temperature in"', () => {
       const string = '@theo temperature in nyc';
       const actual = string.match(PATTERNS.WEATHER);
-      assert.deepStrictEqual(actual.pop(), 'temperature in');
+      expect(actual.pop()).toEqual('temperature in');
     });
       
     it('should retrieve a matching string if a user says "forecast in"', () => {
       const string = '@theo forecast in nyc';
       const actual = string.match(PATTERNS.WEATHER);
-      assert.deepStrictEqual(actual.pop(), 'forecast in');
+      expect(actual.pop()).toEqual('forecast in');
     });
   });
     
@@ -67,7 +65,7 @@ describe('Patterns', () => {
     it('should retrieve a matching string if a user says "feeling"', () => {
       const string = '@theo feeling happy and sad and mad and confused?!';
       const actual = string.match(PATTERNS.SPOTIFY_PLAYLIST);
-      assert.deepStrictEqual(actual.join(''), 'feeling');
+      expect(actual.join('')).toEqual('feeling');
     });
   });
     
@@ -75,7 +73,7 @@ describe('Patterns', () => {
     it('should retrieve a matching string if a user says "covid19 data for"', () => {
       const string = '@theo covid19 data for nyc';
       const actual = string.match(PATTERNS.COVID19);
-      assert.deepStrictEqual(actual.pop(), 'covid19 data for');
+      expect(actual.pop()).toEqual('covid19 data for');
     });
   });
 
@@ -83,41 +81,41 @@ describe('Patterns', () => {
     it('should retrieve a matching string if a user says "help"', () => {
       const string = '@theo help';
       const actual = string.match(PATTERNS.HELP);
-      assert.deepStrictEqual(actual.join(''), 'help');
+      expect(actual.join('')).toEqual('help');
     });
   });
     
   it('should retrieve a matching string if a user says "assist"', () => {
     const string = '@theo assist me!';
     const actual = string.match(PATTERNS.HELP);
-    assert.deepStrictEqual(actual.join(''), 'assist');
+    expect(actual.join('')).toEqual('assist');
   });
     
   describe('RECIPES', () => {
     it('should retrieve a matching string if a user says "recipe for"', () => {
       const string = '@theo recipe for pizza';
       const actual = string.match(PATTERNS.RECIPES);
-      assert.deepStrictEqual(actual.pop(), 'recipe for');
+      expect(actual.pop()).toEqual('recipe for');
     });
   });
 
   it('should retrieve a matching string if a user says "recipes for"', () => {
     const string = '@theo recipes for pizza';
     const actual = string.match(PATTERNS.RECIPES);
-    assert.deepStrictEqual(actual.pop(), 'recipes for');
+    expect(actual.pop()).toEqual('recipes for');
   });
     
   describe('INGREDIENTS_BASED_RECIPE', () => {
     it('should retrieve a matching string if a user says "recipe using"', () => {
       const string = '@theo recipe using sazon';
       const actual = string.match(PATTERNS.INGREDIENTS_BASED_RECIPE);
-      assert.deepStrictEqual(actual.pop(), 'recipe using');
+      expect(actual.pop()).toEqual('recipe using');
     });
       
     it('should retrieve a matching string if a user says "recipes using ingredients"', () => {
       const string = '@theo recipes using ingredients salt and pepper';
       const actual = string.match(PATTERNS.INGREDIENTS_BASED_RECIPE);
-      assert.deepStrictEqual(actual.pop(), 'recipes using ingredients');
+      expect(actual.pop()).toEqual('recipes using ingredients');
     });
   });
 });
