@@ -3,4 +3,4 @@ node_js:
   - "12"
 scripts:
   - npm run lint:server
-  - npm run test:unit
+  - npm run test:unit:coverage
