@@ -1,11 +1,9 @@
 require('dotenv').config();
-const express = require('express');
 const path = require('path');
 const request = require('request-promise');
 const slackEventsApi = require('@slack/events-api');
 const figlet = require('figlet');
 const cron = require('node-cron');
-const app = express();
 
 const env = require('../config/env');
 const PATTERNS = require('../shared/patterns');
@@ -23,13 +21,14 @@ const Unsplash = require('../src/API/Unsplash');
 const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
-  constructor() {
+  constructor(express) {
     this.slack = new Slack(request);
     this.yelp = new Yelp();
     this.weather = new Weather();
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.spoonacular = new Spoonacular();
     this.unsplash = new Unsplash();
+    this.app = express;
   }
 
   setUp() {
@@ -43,7 +42,7 @@ class Server {
   }
     
   async initSlackListener() {
-    await app.use('/slack/events', slackEvents.expressMiddleware());
+    await this.app.use('/slack/events', slackEvents.expressMiddleware());
     // reaction trigger
     await slackEvents.on('reaction_added', async message => {
       const playlistSearch = await this.spotify.searchPlaylists(message.reaction);
@@ -51,7 +50,7 @@ class Server {
       this.slack.sharePlaylist({ message, randomPlaylist });
     });
 
-    await slackEvents.on('app_mention', async message => {
+    await slackEvents.on('this._mention', async message => {
       console.log(`Received a message event: user ${message.user} in channel ${message.channel} says ${message.text}`);
       // greetings
       if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {
@@ -127,7 +126,7 @@ class Server {
   }
 
   init(port) {
-    app.listen(port, () => {
+    this.app.listen(port, () => {
       figlet('Theo', (err, data) => {
         if (err) {
           console.log('Something went wrong...');
@@ -141,7 +140,7 @@ class Server {
   }
 
   get(route) {
-    app.get(route, (req, res) => {
+    this.app.get(route, (req, res) => {
       /* eslint-disable no-undef */
       res.sendFile('index.html', { root: path.join(__dirname, '../public/')});
     })
@@ -149,7 +148,7 @@ class Server {
   }
 
   auth() {
-    app.get('/oauth', (req, res) => {
+    this.app.get('/oauth', (req, res) => {
       if (!req.query.code) {
         res.status(500);
         res.send({ 'Error': 'Something went wrong with authenticating Slack!' });

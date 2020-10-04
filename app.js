@@ -1,8 +1,9 @@
+const express = require('express');
 const Server = require('./server/server');
-const Bot = new Server();
+const Theo = new Server(express());
 
-const initBot = () =>  {
-  Bot.setUp();
+const initTheo = () =>  {
+  Theo.setUp();
 }
 
-initBot();
+initTheo();
