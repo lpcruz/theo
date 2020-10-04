@@ -42,7 +42,7 @@ class Slack {
   }
 
   notify(message, channel) {
-    this.api({
+    this.request({
       uri: channel,
       method: 'POST',
       headers: {
