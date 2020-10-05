@@ -130,6 +130,7 @@ class Slack {
       }
     ];
     this.notify(message, channel);
+    return message;
   }
 
   giveTheWeather(opts) {
@@ -151,6 +152,7 @@ class Slack {
       }
     ];
     this.notify(message, channel);
+    return message;
   }
 
   shareRecipeList(opts) {
@@ -177,6 +179,7 @@ class Slack {
       }
     ];
     this.notify(message, channel);
+    return message;
   }
   
   help(opts) {
