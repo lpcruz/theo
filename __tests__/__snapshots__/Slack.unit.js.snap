@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slack greetings should do something 1`] = `
+Array [
+  Object {
+    "text": Object {
+      "text": ":wave: <@dev>!",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+]
+`;
