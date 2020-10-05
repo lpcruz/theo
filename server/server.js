@@ -1,15 +1,9 @@
 require('dotenv').config();
 const path = require('path');
-const slackEventsApi = require('@slack/events-api');
 const figlet = require('figlet');
 const cron = require('node-cron');
-
 const env = require('../config/env');
 const PATTERNS = require('../shared/patterns');
-const slackEvents = slackEventsApi.createEventAdapter(
-  env.SLACK.SLACK_SIGNING_SECRET, {
-    includeBody: true
-  });
 const Slack = require('../src/API/Slack');
 const Yelp = require('../src/API/Yelp');
 const Weather = require('../src/API/Weather');
@@ -20,8 +14,12 @@ const Unsplash = require('../src/API/Unsplash');
 const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
-  constructor(express, request) {
+  constructor(express, request, slackEventsApi) {
     this.slack = new Slack(request);
+    this.slackEvents = slackEventsApi.createEventAdapter(
+      env.SLACK.SLACK_SIGNING_SECRET, {
+        includeBody: true
+      });
     this.yelp = new Yelp();
     this.weather = new Weather();
     this.spotify = new SpotifyAPI(SpotifyClient);
@@ -41,15 +39,15 @@ class Server {
   }
     
   async initSlackListener() {
-    await this.app.use('/slack/events', slackEvents.expressMiddleware());
+    await this.app.use('/slack/events', this.slackEvents.expressMiddleware());
     // reaction trigger
-    await slackEvents.on('reaction_added', async message => {
+    await this.slackEvents.on('reaction_added', async message => {
       const playlistSearch = await this.spotify.searchPlaylists(message.reaction);
       const randomPlaylist = playlistSearch.body.playlists.items[Math.floor(Math.random() * playlistSearch.body.playlists.items.length)];
       this.slack.sharePlaylist({ message, randomPlaylist });
     });
 
-    await slackEvents.on('app_mention', async message => {
+    await this.slackEvents.on('app_mention', async message => {
       console.log(`Received a message event: user ${message.user} in channel ${message.channel} says ${message.text}`);
       // greetings
       if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {
