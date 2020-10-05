@@ -16,8 +16,20 @@ describe('Slack', () => {
     slack = new Slack(request);
   });
   
-  describe('greetings', () => {
+  describe('greet', () => {
     it('should wave back', () => {
+      const message = {
+        message: {
+          user: 'dev',
+          channel: fakeChannel.CHANNEL_ID
+        }
+      };
+      expect(slack.greet(message)).toMatchSnapshot();
+    });
+  });
+  
+  describe('help', () => {
+    it('should provide instructions', () => {
       const message = {
         message: {
           user: 'dev',

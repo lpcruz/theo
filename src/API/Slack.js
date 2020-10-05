@@ -209,6 +209,7 @@ class Slack {
       }
     ];
     this.notify(message, channel);
+    return message;
   }
 }
 

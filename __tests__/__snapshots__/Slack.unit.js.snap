@@ -1,6 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Slack greetings should wave back 1`] = `
+exports[`Slack greet should wave back 1`] = `
+Array [
+  Object {
+    "text": Object {
+      "text": ":wave: <@dev>!",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+]
+`;
+
+exports[`Slack help should provide instructions 1`] = `
 Array [
   Object {
     "text": Object {
