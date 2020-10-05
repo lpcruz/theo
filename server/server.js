@@ -1,6 +1,3 @@
-const path = require('path');
-const figlet = require('figlet');
-const cron = require('node-cron');
 const env = require('../config/env');
 const PATTERNS = require('../shared/patterns');
 const Slack = require('../src/API/Slack');
@@ -13,18 +10,21 @@ const Unsplash = require('../src/API/Unsplash');
 const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
-  constructor(express, request, slackEventsApi) {
-    this.slack = new Slack(request);
-    this.slackEvents = slackEventsApi.createEventAdapter(
+  constructor(opts) {
+    this.slack = new Slack(opts.request);
+    this.slackEvents = opts.slackEventsApi.createEventAdapter(
       env.SLACK.SLACK_SIGNING_SECRET, {
         includeBody: true
       });
+    this.app = opts.express();
+    this.figlet = opts.figlet;
+    this.path = opts.path;
+    this.cron = opts.cron;
     this.yelp = new Yelp();
     this.weather = new Weather();
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.spoonacular = new Spoonacular();
     this.unsplash = new Unsplash();
-    this.app = express();
   }
 
   start() {
@@ -118,12 +118,12 @@ class Server {
     const freq = '00 18 * * *';
     const callback = () => getWodForToday(env.SLACK.WORKOUTS_URI);
     const options = { timezone: 'America/New_York' };
-    cron.schedule(freq, callback, options).start();
+    this.cron.schedule(freq, callback, options).start();
   }
 
   init(port) {
     this.app.listen(port, () => {
-      figlet('Theo', (err, data) => {
+      this.figlet('Theo', (err, data) => {
         if (err) {
           console.log('Something went wrong...');
           console.dir(err);
@@ -138,7 +138,7 @@ class Server {
   get(route) {
     this.app.get(route, (req, res) => {
       /* eslint-disable no-undef */
-      res.sendFile('index.html', { root: path.join(__dirname, '../public/')});
+      res.sendFile('index.html', { root: this.path.join(__dirname, '../public/')});
     })
     return this;
   }
