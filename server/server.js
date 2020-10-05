@@ -27,7 +27,7 @@ class Server {
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.spoonacular = new Spoonacular();
     this.unsplash = new Unsplash();
-    this.app = express;
+    this.app = express();
   }
 
   setUp() {
