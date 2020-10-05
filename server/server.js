@@ -31,6 +31,7 @@ class Server {
   }
 
   setUp() {
+    console.log(this.app)
     return this
       .init(env.PORT || 4390)
       .auth()
