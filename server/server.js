@@ -28,7 +28,7 @@ class Server {
     this.app = express();
   }
 
-  setUp() {
+  start() {
     return this
       .init(env.PORT || 4390)
       .auth()
