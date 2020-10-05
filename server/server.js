@@ -1,4 +1,3 @@
-const env = require('../config/env');
 const PATTERNS = require('../shared/patterns');
 const Slack = require('../src/API/Slack');
 const Yelp = require('../src/API/Yelp');
@@ -11,9 +10,10 @@ const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
   constructor(opts) {
+    this.env = opts.env;
     this.slack = new Slack(opts.request);
     this.slackEvents = opts.slackEventsApi.createEventAdapter(
-      env.SLACK.SLACK_SIGNING_SECRET, {
+      this.env.SLACK.SLACK_SIGNING_SECRET, {
         includeBody: true
       });
     this.app = opts.express();
@@ -29,7 +29,7 @@ class Server {
 
   start() {
     return this
-      .init(env.PORT || 4390)
+      .init(this.env.PORT || 4390)
       .auth()
       .get('/')
       .get('/oauth')
@@ -116,7 +116,7 @@ class Server {
 
   wod() {
     const freq = '00 18 * * *';
-    const callback = () => getWodForToday(env.SLACK.WORKOUTS_URI);
+    const callback = () => getWodForToday(this.env.SLACK.WORKOUTS_URI);
     const options = { timezone: 'America/New_York' };
     this.cron.schedule(freq, callback, options).start();
   }
@@ -154,8 +154,8 @@ class Server {
           url: 'https://slack.com/api/oauth.access',
           qs: {
             code: req.query.code,
-            client_id: env.SLACK.SLACK_CLIENT_ID,
-            client_secret: env.SLACK.SLACK_CLIENT_SECRET
+            client_id: this.env.SLACK.SLACK_CLIENT_ID,
+            client_secret: this.env.SLACK.SLACK_CLIENT_SECRET
           },
           method: 'GET',
         

@@ -6,6 +6,7 @@ const figlet = require('figlet');
 const cron = require('node-cron');
 const slackEventsApi = require('@slack/events-api');
 const Server = require('./server/server');
+const env = require('./config/env');
 
 const theoOpts = {
   express,
@@ -13,7 +14,8 @@ const theoOpts = {
   slackEventsApi,
   path,
   figlet,
-  cron
+  cron,
+  env
 }
 const Theo = new Server(theoOpts);
 Theo.start();
