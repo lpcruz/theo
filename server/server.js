@@ -1,6 +1,5 @@
 require('dotenv').config();
 const path = require('path');
-const request = require('request-promise');
 const slackEventsApi = require('@slack/events-api');
 const figlet = require('figlet');
 const cron = require('node-cron');
@@ -21,7 +20,7 @@ const Unsplash = require('../src/API/Unsplash');
 const { getWodForToday } = require('../cronjobs/wodbot');
 
 class Server {
-  constructor(express) {
+  constructor(express, request) {
     this.slack = new Slack(request);
     this.yelp = new Yelp();
     this.weather = new Weather();
