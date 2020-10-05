@@ -4,3 +4,5 @@ node_js:
 scripts:
   - npm run lint:server
   - npm run test:unit:coverage
+notifications:
+  slack: off-the-blackboard:jRnSl052p8jz7ZALo7LfCrVu
