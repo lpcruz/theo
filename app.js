@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const request = require('request-promise');
 const slackEventsApi = require('@slack/events-api');

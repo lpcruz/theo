@@ -1,4 +1,3 @@
-require('dotenv').config();
 const path = require('path');
 const figlet = require('figlet');
 const cron = require('node-cron');
