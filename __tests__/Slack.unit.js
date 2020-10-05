@@ -17,7 +17,7 @@ describe('Slack', () => {
   });
   
   describe('greetings', () => {
-    it('should do something', () => {
+    it('should wave back', () => {
       const message = {
         message: {
           user: 'dev',
