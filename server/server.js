@@ -31,7 +31,6 @@ class Server {
   }
 
   setUp() {
-    console.log(this.app)
     return this
       .init(env.PORT || 4390)
       .auth()
@@ -50,7 +49,7 @@ class Server {
       this.slack.sharePlaylist({ message, randomPlaylist });
     });
 
-    await slackEvents.on('this._mention', async message => {
+    await slackEvents.on('app_mention', async message => {
       console.log(`Received a message event: user ${message.user} in channel ${message.channel} says ${message.text}`);
       // greetings
       if (!message.subtype && message.text.match(PATTERNS.GREETINGS)) {
