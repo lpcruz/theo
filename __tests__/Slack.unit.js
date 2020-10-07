@@ -1,12 +1,6 @@
 'use strict';
 const Slack = require('../src/API/Slack');
 
-const fakeChannel = {
-  NAME: '#dev',
-  CHANNEL_ID: 'C0145H2QG74',
-  SLACK_HOOK: 'foobarbazhook1234'
-}
-
 describe('Slack', () => {
   let request;
   let slack;
@@ -21,7 +15,7 @@ describe('Slack', () => {
       const message = {
         message: {
           user: 'dev',
-          channel: fakeChannel.CHANNEL_ID
+          channel: 'FOOBAZBAR1234'
         }
       };
       expect(slack.greet(message)).toMatchSnapshot();
@@ -33,7 +27,7 @@ describe('Slack', () => {
       const message = {
         message: {
           user: 'dev',
-          channel: fakeChannel.CHANNEL_ID
+          channel: 'FOOBAZBAR1234'
         }
       };
       expect(slack.greet(message)).toMatchSnapshot();

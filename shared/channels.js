@@ -2,6 +2,11 @@ const { SLACK } = require('../config/env');
 
 const CHANNELS = [
   {
+    NAME: '#fake-channel',
+    CHANNEL_ID: 'FOOBAZBAR1234',
+    SLACK_HOOK: 'JUSTFORTESTING'
+  },
+  {
     NAME: '#dev',
     CHANNEL_ID: 'C0145H2QG74',
     SLACK_HOOK: SLACK.DEV_URI
