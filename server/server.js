@@ -34,10 +34,10 @@ class Server {
       .get('/')
       .get('/oauth')
       .get('/slack/events')
-      .initSlackListener();
+      .slackEventJobs()
   }
     
-  async initSlackListener() {
+  async slackEventJobs() {
     await this.app.use('/slack/events', this.slackEvents.expressMiddleware());
     // reaction trigger
     await this.slackEvents.on('reaction_added', async message => {
