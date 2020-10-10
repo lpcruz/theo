@@ -21,7 +21,7 @@ class Server {
     this.path = opts.path;
     this.cron = opts.cron;
     this.yelp = new Yelp();
-    this.weather = new Weather(opts.request);
+    this.weather = new Weather(opts.request, opts.env);
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.spoonacular = new Spoonacular();
     this.unsplash = new Unsplash();
