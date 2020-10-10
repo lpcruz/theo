@@ -140,13 +140,6 @@ class Slack {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `Here's the weather in${opts.location} for today. Wash your hands and wear a mask if you go outside! :mask:`
-        }
-      },
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
           text: `It is currently ${Math.floor(opts.weather.main.temp)}°F with ${opts.weather.weather[0].description}`
         }
       }
