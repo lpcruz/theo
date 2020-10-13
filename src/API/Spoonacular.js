@@ -1,19 +1,21 @@
-const request = require('request-promise');
-
-const env = require('../../config/env');
-
+'use strict';
 const ENDPOINTS = {
   RECIPE_SEARCH: 'https://api.spoonacular.com/recipes/search?',
   INGREDIENTS_BASED_SEARCH: 'https://api.spoonacular.com/recipes/findByIngredients?'
 }
 
 class Spoonacular {
+  constructor(request, env) {
+    this.request = request;
+    this.env = env;
+  }
+
   async getRecipes(query) {
-    return await request(`${ENDPOINTS.RECIPE_SEARCH}apiKey=${env.SPOONACULAR.SPOONACULAR_API_KEY}&query=${query}`);
+    return await this.request(`${ENDPOINTS.RECIPE_SEARCH}apiKey=${this.env.SPOONACULAR.SPOONACULAR_API_KEY}&query=${query}`);
   }
 
   async getRecipesBasedOnIngredients(ingredients) {
-    return await request(`${ENDPOINTS.INGREDIENTS_BASED_SEARCH}apiKey=${env.SPOONACULAR.SPOONACULAR_API_KEY}&ingredients=${ingredients}`);
+    return await this.request(`${ENDPOINTS.INGREDIENTS_BASED_SEARCH}apiKey=${this.env.SPOONACULAR.SPOONACULAR_API_KEY}&ingredients=${ingredients}`);
   }
 }
 
