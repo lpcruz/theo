@@ -20,7 +20,7 @@ class Server {
     this.figlet = opts.figlet;
     this.path = opts.path;
     this.cron = opts.cron;
-    this.yelp = new Yelp();
+    this.yelp = new Yelp(opts.yelp, opts.env);
     this.weather = new Weather(opts.request, opts.env);
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.spoonacular = new Spoonacular();

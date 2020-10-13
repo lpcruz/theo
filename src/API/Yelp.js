@@ -1,15 +1,18 @@
-const yelp = require('yelp-fusion');
+'use strict';
+class Yelp {
+  constructor(yelpAPI, env) {
+    this.yelpAPI = yelpAPI;
+    this.env = env;
+    this.client = this.yelpAPI.client(
+      this.env.YELP.YELP_API_KEY, {
+        socketTimeout: 5000
+      }
+    )
+  }
 
-const env = require('../../config/env');
-const client = yelp.client(
-  env.YELP.YELP_API_KEY, {
-    socketTimeout: 5000
-  });
-
-class Yelp { 
   async getBiz(term, location) {
     try {
-      const res = await client.search({ term, location });
+      const res = await this.client.search({ term, location });
       return res.jsonBody.businesses[0];
     } catch (e) {
       console.error('Something went wrong!', e);
@@ -19,7 +22,7 @@ class Yelp {
 
   async getBizReviews(biz) {
     try {
-      const res = await client.reviews(biz);
+      const res = await this.client.reviews(biz);
       return res.jsonBody.reviews[0].text;
     } catch (e) {
       console.error('Something went wrong!', e);
@@ -27,6 +30,5 @@ class Yelp {
     }
   }
 }
-
 
 module.exports = Yelp;
