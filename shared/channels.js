@@ -7,7 +7,7 @@ const CHANNELS = [
     SLACK_HOOK: 'JUSTFORTESTING'
   },
   {
-    NAME: '#dev',
+    NAME: '#theo-dev',
     CHANNEL_ID: 'C0145H2QG74',
     SLACK_HOOK: SLACK.DEV_URI
   },
