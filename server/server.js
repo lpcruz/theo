@@ -24,7 +24,7 @@ class Server {
     this.weather = new Weather(opts.request, opts.env);
     this.spotify = new SpotifyAPI(SpotifyClient);
     this.spoonacular = new Spoonacular();
-    this.unsplash = new Unsplash();
+    this.unsplash = new Unsplash(opts.request, opts.env);
   }
 
   start() {

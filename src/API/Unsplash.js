@@ -1,10 +1,12 @@
-const request = require('request-promise');
-
-const env = require('../../config/env');
-
+'use strict';
 class Unsplash {
+  constructor(request, env) {
+    this.request = request;
+    this.env = env;
+  }
   async getPhoto(query) {
-    return await request(`https://api.unsplash.com/search/photos/?client_id=${env.UNSPLASH.UNSPLASH_ACCESS_KEY}&query=${query}`);
+    const endpoint = `https://api.unsplash.com/search/photos/?client_id=${this.env.UNSPLASH.UNSPLASH_ACCESS_KEY}&query=${query}`;
+    return await this.request(endpoint);
   }
 }
 
